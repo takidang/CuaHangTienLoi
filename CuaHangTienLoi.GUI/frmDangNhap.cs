@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CuaHangTienLoi.BUS;
+using System;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Windows.Forms;
-using CuaHangTienLoi.BUS;
 
 namespace CuaHangTienLoi.GUI
 {
@@ -15,11 +17,12 @@ namespace CuaHangTienLoi.GUI
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
+  
             try
             {
                 string ten = txtTenDangNhap.Text.Trim();
                 string mk = txtMatKhau.Text;
-
+           
                 var bus = new TaiKhoanBUS();
                 TaiKhoanDangNhap = bus.DangNhap(ten, mk);
 
@@ -51,6 +54,22 @@ namespace CuaHangTienLoi.GUI
         {
             MessageBox.Show("Chức năng đăng ký sẽ được thêm sau!", "Thông báo");
             // Bạn có thể mở frmDangKy ở đây sau này
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["MyShopConnection"].ConnectionString))
+                {
+                    conn.Open();
+                    MessageBox.Show("Kết nối CSDL thành công!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kết nối: " + ex.Message);
+            }
         }
     }
 }
